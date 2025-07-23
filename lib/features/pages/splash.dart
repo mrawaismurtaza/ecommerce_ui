@@ -1,25 +1,5 @@
 import 'package:flutter/material.dart';
-import 'features/pages/splash.dart';
 
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen(),
-    );
-  }
-}
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
@@ -50,7 +30,7 @@ class SplashScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              const Spacer(),
+              SizedBox(height: 100),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Column(
