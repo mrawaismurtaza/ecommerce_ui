@@ -3,6 +3,9 @@ import 'package:ecommerce_ui/data/repositories/product_repository.dart';
 import 'package:ecommerce_ui/features/widgets/product_list.dart';
 import 'package:flutter/material.dart';
 import '../widgets/bottom_navbar.dart';
+import 'categories.dart';
+import 'favourites.dart';
+import 'profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,7 +20,6 @@ class _HomePageState extends State<HomePage> {
   void _onNavTap(int index) {
     setState(() {
       _currentIndex = index;
-      // Add navigation logic if needed
     });
   }
 
@@ -45,7 +47,6 @@ class _HomePageState extends State<HomePage> {
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
-        onTap: _onNavTap,
       ),
     );
   }

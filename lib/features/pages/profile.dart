@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/bottom_navbar.dart';
+import 'home.dart';
+import 'categories.dart';
+import 'favourites.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -14,7 +17,6 @@ class _ProfilePageState extends State<ProfilePage> {
   void _onNavTap(int index) {
     setState(() {
       _currentIndex = index;
-      // Add navigation logic if needed
     });
   }
 
@@ -37,7 +39,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
-        onTap: _onNavTap,
       ),
     );
   }
