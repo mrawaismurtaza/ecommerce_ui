@@ -14,4 +14,20 @@ class ProductRepository {
         .toList();
     return _products;
   }
+
+  Future<List<Product>> getProductsByCategory(String category) async {
+    final response = await dio.get('https://dummyjson.com/products/category/$category');
+    final productsJson = response.data['products'] as List;
+    return productsJson
+        .map((json) => Product.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<List<Product>> searchProducts(String query) async {
+    final response = await dio.get('https://dummyjson.com/products/search?q=$query');
+    final productsJson = response.data['products'] as List;
+    return productsJson
+        .map((json) => Product.fromJson(json as Map<String, dynamic>))
+        .toList();
+  }
 }

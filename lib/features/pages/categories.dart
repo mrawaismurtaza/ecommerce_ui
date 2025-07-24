@@ -3,9 +3,6 @@ import 'package:ecommerce_ui/data/repositories/categories_repository.dart';
 import 'package:ecommerce_ui/features/widgets/catogories_list.dart';
 import 'package:flutter/material.dart';
 import '../widgets/bottom_navbar.dart';
-import 'home.dart';
-import 'favourites.dart';
-import 'profile.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -16,9 +13,11 @@ class CategoriesPage extends StatefulWidget {
 
 class _CategoriesPageState extends State<CategoriesPage> {
   int _currentIndex = 1;
-  List<Categories> _categories = [];
+  List<Categories> _allCategories = [];
+  List<Categories> _filteredCategories = [];
   bool _isLoading = true;
   String? _error;
+  final TextEditingController _searchController = TextEditingController();
 
   void _onNavTap(int index) {
     setState(() {
@@ -36,7 +35,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
     try {
       final result = await CategoriesRepository().fetchCategories();
       setState(() {
-        _categories = result;
+        _allCategories = result;
+        _filteredCategories = result;
         _isLoading = false;
       });
     } catch (e) {
@@ -49,24 +49,45 @@ class _CategoriesPageState extends State<CategoriesPage> {
     }
   }
 
+  void _searchCategories(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        _filteredCategories = _allCategories;
+      } else {
+        _filteredCategories = _allCategories
+            .where((category) =>
+                category.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Categories', style: TextStyle(
-          fontSize: 30,
-        ),),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text(
+          'Categories',
+          style: TextStyle(
+            fontSize: 30,
+            color: Colors.black,
+          ),
+        ),
       ),
-      body: Center(
-        child: _isLoading
-            ? CircularProgressIndicator()
-            : _error != null
-                ? Text(_error!)
-                : CategoriesList(categories: _categories),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentIndex,
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _error != null
+              ? Center(child: Text(_error!))
+              : Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: CategoriesList(categories: _filteredCategories),
+                ),
+      bottomNavigationBar: BottomNavBar(currentIndex: _currentIndex),
     );
   }
 }
