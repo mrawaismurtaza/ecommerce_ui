@@ -30,18 +30,18 @@ class _HomePageState extends State<HomePage> {
         ),),
       ),
       body: Center(
-        // child: FutureBuilder<List<Product>>(
-        //   future: ProductRepository().getProducts(),
-        //   builder: (context, snapshot) {
-        //     if (snapshot.connectionState == ConnectionState.waiting) {
-        //       return const CircularProgressIndicator();
-        //     } else if (snapshot.hasError) {
-        //       return Text('Error: ${snapshot.error}');
-        //     } else {
-        //       return ProductList(products: snapshot.data ?? []);
-        //     }
-        //   },
-        // ),
+        child: FutureBuilder<List<Product>>(
+          future: ProductRepository().getProducts(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else {
+              return ProductList(products: snapshot.data ?? []);
+            }
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
